@@ -1,6 +1,6 @@
 defmodule QServerProtocolProc do
+	require Qlib.Configuration, as: QC
 	use GenServer
-	require Record
   	@break "\r\n"
 
 	def start_link(ref, socket, transprot, opts) do
@@ -42,7 +42,7 @@ defmodule QServerProtocolProc do
 
 	defp split([<<"out">> | [tail]], state = %{socket: socket, transport: transport, queue: queue}) do
 		case QlibApi.get(queue) do
-			@end_of_table ->
+			QC.end_of_table ->
 				transport.setopts(socket, [active: :once])
 				transport.send(socket, [])
 			item ->

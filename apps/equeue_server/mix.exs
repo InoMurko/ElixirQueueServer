@@ -1,14 +1,19 @@
-defmodule EqueueQlib.Mixfile do
+defmodule EqueueServer.Mixfile do
   use Mix.Project
 
   def project do
-    [apps_path: "apps",
-     app: :equeue_qlib,
+    [app: :equeue_server,
      version: "0.1.0",
      elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
      deps: deps()]
+  end
+  
+  # Configuration for the OTP application
+  #
+  # Type "mix help compile.app" for more information
+  def application do
+    [mod: {EqueueServer, []},
+    applications: [:qserver, :qlib]]
   end
 
   # Dependencies can be Hex packages:
@@ -21,6 +26,7 @@ defmodule EqueueQlib.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:ranch, "~> 1.2.1"}] 
-   end
+    [{:ranch, "~> 1.2.1"},
+    {:qlib, in_umbrella: true}]
+  end
 end
