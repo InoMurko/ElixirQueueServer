@@ -11,6 +11,8 @@ use Mix.Config
 # You can configure for your application as:
 #
 #     config :equeue_server, key: :value
+import_config "../apps/*/config/config.exs"
+
 #
 # And access this configuration in your application as:
 #

@@ -10,7 +10,7 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :qlib, key: :value
+config :equeue_server, ranch_port: 8080
 #
 # And access this configuration in your application as:
 #
