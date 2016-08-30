@@ -2,11 +2,13 @@ defmodule EqueueServerTest do
   use ExUnit.Case
   doctest EqueueServer
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "publish and ret many", _context do
+    _number_of_processes = 10
+    assert 1 == 1
   end
+  
 
-  test "fifo", context do
+  test "fifo", _context do
     :ok = QlibApi.add("OneAndOnly", "Message1")
     :ok = QlibApi.destroy("OneAndOnly")
     :ok = QlibApi.add("OneAndOnly", "Message")
