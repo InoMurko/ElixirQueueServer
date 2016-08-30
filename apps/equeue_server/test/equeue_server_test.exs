@@ -28,14 +28,14 @@ defmodule EqueueServerTest do
     :ok = QlibApi.add("owner2", "TestMessage")
     assert "Message" == QlibApi.get("owner1")
     assert "TestMessage" == QlibApi.get("owner2")
-    assert '$end_of_table' == QlibApi.get("owner1")
-    assert '$end_of_table' == QlibApi.get("owner2")
+    assert :'$end_of_table' == QlibApi.get("owner1")
+    assert :'$end_of_table' == QlibApi.get("owner2")
     :ok = QlibApi.destroy("OneAndOnly")
     :ok = QlibApi.destroy("JustOne")
     :ok = QlibApi.destroy("JustNothing")
-    assert '$end_of_table' == QlibApi.get("OneAndOnly")
-    assert '$end_of_table' == QlibApi.get("JustOne")
+    assert :'$end_of_table' == QlibApi.get("OneAndOnly")
+    assert :'$end_of_table' == QlibApi.get("JustOne")
     assert [] == :ets.tab2list(:qlib_queue)
   end
-						  
+  
 end

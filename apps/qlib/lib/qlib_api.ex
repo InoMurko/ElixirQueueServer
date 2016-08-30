@@ -39,6 +39,6 @@ defmodule QlibApi do
   Remove all queue entries.                                                                   
   """  
   def destroy(owner) do
-    QlibDB.remove_all(C.end_of_table, owner)
+    QlibDB.remove_all(C.qlib_queue, owner)
   end
 end

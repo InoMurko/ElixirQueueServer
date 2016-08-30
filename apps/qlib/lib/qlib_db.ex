@@ -23,11 +23,6 @@ defmodule QlibDB do
     :ok
   end
   
-  @spec remove_all(String.t) :: :ok
-  def remove_all(_queue) do
-    :ok
-  end
-
   @doc """
   There's the strong assumption that only one and the same process  
   is using this function, and that writes only happen at the end of                              
@@ -51,9 +46,9 @@ defmodule QlibDB do
   """
   @spec first_select(:mnesia.tab(), String.t()) :: C.end_of_table | binary()
   def first_select(table, queue) do
-    fun = fn -> :mnesia.select(table,[{{'$1','$2','$3','$4'},
-				       [{'=:=','$4',{:const, queue}}],
-				       [{{'$2','$3'}}]}], 1, :read) end
+    fun = fn -> :mnesia.select(table,[{{:'$1',:'$2',:'$3',:'$4'},
+				       [{:'=:=',:'$4',{:const, queue}}],
+				       [{{:'$2',:'$3'}}]}], 1, :read) end
     case :mnesia.transaction(fun) do
       {:atomic, C.end_of_table} ->
         C.end_of_table
@@ -117,9 +112,9 @@ defmodule QlibDB do
   """
   @spec remove_all(:mnesia.tab(), String.t()) :: :ok | no_return()
   def remove_all(table, queue) do
-    case :mnesia.dirty_select(table, [{{'$1','$2','$3','$4'},
-				       [{'=:=','$4',{:const, queue}}],
-				       [{{'$2'}}]}]) do
+    case :mnesia.dirty_select(table, [{{:'$1',:'$2',:'$3',:'$4'},
+				       [{:'=:=',:'$4',{:const, queue}}],
+				       [{{:'$2'}}]}]) do
       keys = [_|_] ->
 	for {key} <- keys, do: delete_chk_q(table, key)
 	:ok
